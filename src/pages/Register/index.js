@@ -6,11 +6,13 @@ import { Container } from "../../styles/GlobalStyles";
 import axios from "../../services/axios";
 import history from "../../services/history";
 import { Form } from "./styled";
+import Loading from "../../components/Loading";
 
 export default function Register() {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,6 +36,8 @@ export default function Register() {
     // eslint-disable-next-line no-useless-return
     if (formErrors) return;
 
+    setIsLoading(true);
+
     try {
       await axios.post("/users", {
         nome,
@@ -42,13 +46,16 @@ export default function Register() {
       });
       toast.success("Usuário criado");
       history.push("/login");
+      setIsLoading(false);
     } catch (error) {
       const errors = get(error, "response.data.errors", []);
       errors.map((errorArray) => toast.error(errorArray));
+      setIsLoading(false);
     }
   };
   return (
     <Container>
+      <Loading isLoading={isLoading} />
       <p>Crie sua conta</p>
       <Form onSubmit={handleSubmit}>
         <label htmlFor="nome">
