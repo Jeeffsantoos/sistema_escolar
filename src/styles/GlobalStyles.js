@@ -29,6 +29,7 @@ button {
   padding: 10px 20px;
   border-radius: 4px;
   font-weight: 700;
+  margin-top: 10px;
   transition: all 350ms;
 
   &:hover{
@@ -61,4 +62,8 @@ export const Container = styled.section`
   padding: 25px;
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  h1 {
+    text-align: center;
+  }
 `;
